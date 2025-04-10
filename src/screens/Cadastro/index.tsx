@@ -36,16 +36,16 @@ const Cadastro = ({ navigation }) => {
     }
   };
 
-  // Verifica se todos os campos obrigatórios foram preenchidos
-  const isFormValid = nome && endereco && contato && categorias && imagemURL;
+  // Verifica se todos os campos obrigatórios foram preenchidos e se o numero de contato tem 11 dígitos
+  const isContatoValid = contato.replace(/\D/g, "").length === 11;
+  const isFormValid = nome && endereco && isContatoValid && categorias && imagemURL;
 
   const handleAddFornecedor = async () => {
-    // Valida os campos obrigatórios
-    if (!nome || !endereco || !contato || !categorias || !imagemURL) {
-      Alert.alert("Erro", "Por favor, preencha todos os campos obrigatórios.");
+    if (!isFormValid) {
+      Alert.alert("Erro", "Preencha todos os campos obrigatórios.");
       return;
     }
-
+    
     const contatoNumerico = contato.replace(/\D/g, "");
     if (contatoNumerico.length !== 11) {
       Alert.alert("Erro", "O número de contato deve ter 11 dígitos (DDD + número).");
@@ -143,7 +143,7 @@ const Cadastro = ({ navigation }) => {
           <TouchableOpacity
             style={[
               styles.addButton,
-              !isFormValid && { backgroundColor: "#8fa8f1" }
+              !isFormValid && { opacity: 0.4 },
             ]}
             onPress={handleAddFornecedor}
             disabled={!isFormValid}
