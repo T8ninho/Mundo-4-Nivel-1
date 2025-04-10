@@ -7,7 +7,7 @@ export type FornecedorType = {
   endereco: string;
   contato: string;
   categorias: string;
-  imagemURL?: string;
+  imagemURL: string;
 };
 
 type Props = FornecedorType & {
